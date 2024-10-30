@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dendogram Example</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        /* Add your styles here */
+        .link {
+            fill: none;
+            stroke: #ccc;
+            stroke-width: 2px;
+        }
+
+        .node circle {
+            fill: #999;
+            stroke: #555;
+            stroke-width: 2px;
+        }
+
+        .node text {
+            font: 12px sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <svg width="960" height="600"></svg>
+    <script>
+        // Load the tree data from a local JSON file
+        d3.json("buildings_hierarchy_d3.json", function(error, root) {
+        //const treeData = await d3.json("./buildings_hierarchy_d3.json")
+        //d3.json("buildings_hierarchy_d3.json").then(function(treeData) {
+            //d3.json("buildings_hierarchy_d3.json", function(data){
+                //treeData = data;
+            // Set the dimensions and margins for the SVG
+            const margin = {top: 20, right: 120, bottom: 20, left: 120},
+                  width = +d3.select("svg").attr("width") - margin.right - margin.left,
+                  height = +d3.select("svg").attr("height") - margin.top - margin.bottom;
+
+            const svg = d3.select("svg")
+                .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            const root = d3.hierarchy(treeData);
+            const treeLayout = d3.tree().size([height, width]);
+            treeLayout(root);
+
+            // Links
+            svg.selectAll(".link")
+                .data(root.links())
+                .enter().append("path")
+                .attr("class", "link")
+                .attr("d", d3.linkHorizontal()
+                    .x(d => d.y)
+                    .y(d => d.x));
+
+            // Nodes
+            const node = svg.selectAll(".node")
+                .data(root.descendants())
+                .enter().append("g")
+                .attr("class", d => "node" + (d.children ? " node--internal" : " node--leaf"))
+                .attr("transform", d => "translate(" + d.y + "," + d.x + ")");
+
+            node.append("circle")
+                .attr("r", 5);
+
+            node.append("text")
+                .attr("dy", 3)
+                .attr("x", d => d.children ? -8 : 8)
+                .style("text-anchor", d => d.children ? "end" : "start")
+                .text(d => d.data.name);
+        }).catch(function(error) {
+            console.error("Error loading the JSON data:", error);
+        });
+    </script>
+</body>
+</html>
