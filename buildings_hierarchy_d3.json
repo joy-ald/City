@@ -1,5 +1,5 @@
 {
-    "city": {
+   {
         "parent": "city",
         "children": [
             {
