@@ -10,7 +10,7 @@
                         "building_type": "Building Residential - New",
                         "value": 348983
                     }
-                            ]
+                ]
             },
             {
                 "zip_code": 37013,
@@ -24,8 +24,8 @@
                         "building_type": "Building Commercial - Rehab",
                         "value": 721
                     }
-                            ]
+                ]
             }
-                    ]
-             }
+        ]
+    }
 }
