@@ -7,7 +7,7 @@
                 "parent": 0,
                 "children": [
                     {
-                        "building_type": "Building Residential - New",
+                        "building_type": "BR_New",
                         "value": 348983
                     }
                 ]
@@ -17,19 +17,19 @@
                 "parent": 37013,
                 "children": [
                     {
-                        "building_type": "Building Commercial - New",
+                        "building_type": "BCNew",
                         "value": 2726875
                     },
                     {
-                        "building_type": "Building Commercial - Rehab",
+                        "building_type": "BCRehab",
                         "value": 721
                     },
                     {
-                        "building_type": "Building Commercial - Shell",
+                        "building_type": "BCShell",
                         "value": 0
                     },
                     {
-                        "building_type": "Building Commercial New Storm Damage",
+                        "building_type": "BCNew Storm Damage",
                         "value": 0
                     },
                     {
