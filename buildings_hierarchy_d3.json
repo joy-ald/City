@@ -4,1146 +4,1181 @@
         "children": [
             {
                 "zip_code": 0,
+                "total_value": 348983,
                 "parent": 0,
                 "children": [
                     {
                         "building_type": "Building Residential - New",
-                        "value": 348983
+                        "value": 348983.0
                     }
                 ]
             },
-            
             {
                 "zip_code": 37013,
+                "total_value": 6060848,
                 "parent": 37013,
                 "children": [
                     {
                         "building_type": "Building Commercial - New",
-                        "value": 2726875
+                        "value": 2726875.0
                     },
                     {
                         "building_type": "Building Commercial - Rehab",
-                        "value": 721
+                        "value": 721.0
                     },
                     {
                         "building_type": "Building Commercial - Shell",
-                        "value": 0
+                        "value": 0.0
                     },
                     {
                         "building_type": "Building Commercial New Storm Damage",
-                        "value": 0
+                        "value": 0.0
                     },
                     {
                         "building_type": "Building Demolition Permit",
-                        "value": 30000
+                        "value": 30000.0
                     },
                     {
                         "building_type": "Building Residential - Addition",
-                        "value": 141458
+                        "value": 141458.0
                     },
                     {
                         "building_type": "Building Residential - New",
-                        "value": 850365
+                        "value": 850365.0
                     },
                     {
                         "building_type": "Building Residential - Rehab",
-                        "value": 91663
+                        "value": 91663.0
                     },
                     {
                         "building_type": "Building Residential - Roofing / Siding",
-                        "value": 18241
+                        "value": 18241.0
                     },
                     {
                         "building_type": "Building Sign Permit",
-                        "value": 37521
+                        "value": 37521.0
                     },
                     {
                         "building_type": "Building Tree Removal Permit",
-                        "value": 20010
+                        "value": 20010.0
                     },
                     {
                         "building_type": "Building Use & Occupancy",
-                        "value": 2143994
+                        "value": 2143994.0
                     }
                 ]
             },
             {
                 "zip_code": 37015,
+                "total_value": 0,
                 "parent": 37015,
                 "children": [
                     {
                         "building_type": "Building Residential - Addition",
-                        "value": 0
+                        "value": 0.0
                     }
                 ]
             },
             {
                 "zip_code": 37027,
+                "total_value": 1448014,
                 "parent": 37027,
                 "children": [
                     {
                         "building_type": "Building Residential - Addition",
-                        "value": 336740
+                        "value": 336740.0
                     },
                     {
                         "building_type": "Building Residential - New",
-                        "value": 1111274
+                        "value": 1111274.0
                     }
                 ]
             },
             {
                 "zip_code": 37072,
+                "total_value": 3063823,
                 "parent": 37072,
                 "children": [
                     {
                         "building_type": "Building Demolition Permit",
-                        "value": 8500
+                        "value": 8500.0
                     },
                     {
                         "building_type": "Building Residential - Addition",
-                        "value": 609
+                        "value": 609.0
                     },
                     {
                         "building_type": "Building Residential - New",
-                        "value": 2811638
+                        "value": 2811638.0
                     },
                     {
                         "building_type": "Building Residential - Rehab",
-                        "value": 168880
+                        "value": 168880.0
                     },
                     {
                         "building_type": "Building Use & Occupancy",
-                        "value": 74196
+                        "value": 74196.0
                     }
                 ]
             },
             {
                 "zip_code": 37076,
+                "total_value": 3950781,
                 "parent": 37076,
                 "children": [
                     {
                         "building_type": "Building Commercial - New",
-                        "value": 3449
+                        "value": 3449.0
                     },
                     {
                         "building_type": "Building Commercial - Rehab",
-                        "value": 1
+                        "value": 1.0
                     },
                     {
                         "building_type": "Building Commercial - Tenant Finish Out",
-                        "value": 156210
+                        "value": 156210.0
                     },
                     {
                         "building_type": "Building Demolition Permit",
-                        "value": 60210
+                        "value": 60210.0
                     },
                     {
                         "building_type": "Building Residential - Addition",
-                        "value": 33948
+                        "value": 33948.0
                     },
                     {
                         "building_type": "Building Residential - New",
-                        "value": 1868547
+                        "value": 1868547.0
                     },
                     {
                         "building_type": "Building Residential - Rehab",
-                        "value": 3000
+                        "value": 3000.0
                     },
                     {
                         "building_type": "Building Residential - Roofing / Siding",
-                        "value": 1825415
+                        "value": 1825415.0
                     },
                     {
                         "building_type": "Building Use & Occupancy",
-                        "value": 1
+                        "value": 1.0
                     }
                 ]
             },
             {
                 "zip_code": 37080,
+                "total_value": 160242,
                 "parent": 37080,
                 "children": [
                     {
                         "building_type": "Building Residential - Addition",
-                        "value": 75914
+                        "value": 75914.0
                     },
                     {
                         "building_type": "Building Residential - New",
-                        "value": 68973
+                        "value": 68973.0
                     },
                     {
                         "building_type": "Building Use & Occupancy",
-                        "value": 15355
+                        "value": 15355.0
                     }
                 ]
             },
             {
                 "zip_code": 37086,
+                "total_value": 44195,
                 "parent": 37086,
                 "children": [
                     {
                         "building_type": "Building Commercial - Addition",
-                        "value": 0
+                        "value": 0.0
                     },
                     {
                         "building_type": "Building Commercial - New",
-                        "value": 44195
+                        "value": 44195.0
                     },
                     {
                         "building_type": "Building Commercial - Rehab",
-                        "value": 0
+                        "value": 0.0
                     }
                 ]
             },
             {
                 "zip_code": 37115,
+                "total_value": 4624078,
                 "parent": 37115,
                 "children": [
                     {
                         "building_type": "Building Commercial - Rehab",
-                        "value": 728445
+                        "value": 728445.0
                     },
                     {
                         "building_type": "Building Demolition Permit",
-                        "value": 1021000
+                        "value": 1021000.0
                     },
                     {
                         "building_type": "Building Residential - Addition",
-                        "value": 253112
+                        "value": 253112.0
                     },
                     {
                         "building_type": "Building Residential - New",
-                        "value": 2351613
+                        "value": 2351613.0
                     },
                     {
                         "building_type": "Building Residential - Rehab",
-                        "value": 56660
+                        "value": 56660.0
                     },
                     {
                         "building_type": "Building Residential - Roofing / Siding",
-                        "value": 207377
+                        "value": 207377.0
                     },
                     {
                         "building_type": "Building Sign Permit",
-                        "value": 5820
+                        "value": 5820.0
                     },
                     {
                         "building_type": "Building Use & Occupancy",
-                        "value": 51
+                        "value": 51.0
                     }
                 ]
             },
             {
                 "zip_code": 37122,
+                "total_value": 2943,
                 "parent": 37122,
                 "children": [
                     {
                         "building_type": "Building Residential - New",
-                        "value": 2943
+                        "value": 2943.0
                     }
                 ]
             },
             {
                 "zip_code": 37135,
+                "total_value": 8018,
                 "parent": 37135,
                 "children": [
                     {
                         "building_type": "Building Residential - New",
-                        "value": 8018
+                        "value": 8018.0
                     }
                 ]
             },
             {
                 "zip_code": 37138,
+                "total_value": 845745,
                 "parent": 37138,
                 "children": [
                     {
                         "building_type": "Building Commercial - Addition",
-                        "value": 0
+                        "value": 0.0
                     },
                     {
                         "building_type": "Building Commercial - Rehab",
-                        "value": 1000
+                        "value": 1000.0
                     },
                     {
                         "building_type": "Building Demolition Permit",
-                        "value": 20480
+                        "value": 20480.0
                     },
                     {
                         "building_type": "Building Residential - Addition",
-                        "value": 15235
+                        "value": 15235.0
                     },
                     {
                         "building_type": "Building Residential - New",
-                        "value": 652512
+                        "value": 652512.0
                     },
                     {
                         "building_type": "Building Residential - Rehab",
-                        "value": 130108
+                        "value": 130108.0
                     },
                     {
                         "building_type": "Building Sign Permit",
-                        "value": 9400
+                        "value": 9400.0
                     },
                     {
                         "building_type": "Building Tree Removal Permit",
-                        "value": 10
+                        "value": 10.0
                     },
                     {
                         "building_type": "Building Use & Occupancy",
-                        "value": 17000
+                        "value": 17000.0
                     }
                 ]
             },
             {
                 "zip_code": 37143,
+                "total_value": 40004,
                 "parent": 37143,
                 "children": [
                     {
                         "building_type": "Building Residential - New",
-                        "value": 40004
+                        "value": 40004.0
                     }
                 ]
             },
             {
                 "zip_code": 37189,
+                "total_value": 397600,
                 "parent": 37189,
                 "children": [
                     {
                         "building_type": "Building Commercial - New",
-                        "value": 0
+                        "value": 0.0
                     },
                     {
                         "building_type": "Building Demolition Permit",
-                        "value": 2000
+                        "value": 2000.0
                     },
                     {
                         "building_type": "Building Residential - New",
-                        "value": 388600
+                        "value": 388600.0
                     },
                     {
                         "building_type": "Building Residential - Rehab",
-                        "value": 7000
+                        "value": 7000.0
                     }
                 ]
             },
             {
                 "zip_code": 37201,
+                "total_value": 223000,
                 "parent": 37201,
                 "children": [
                     {
                         "building_type": "Building Commercial - Rehab",
-                        "value": 215000
+                        "value": 215000.0
                     },
                     {
                         "building_type": "Building Sign Permit",
-                        "value": 8000
+                        "value": 8000.0
                     },
                     {
                         "building_type": "Temporary Building Use & Occupancy",
-                        "value": 0
+                        "value": 0.0
                     }
                 ]
             },
             {
                 "zip_code": 37203,
+                "total_value": 104007227,
                 "parent": 37203,
                 "children": [
                     {
                         "building_type": "Building Commercial - Addition",
-                        "value": 0
+                        "value": 0.0
                     },
                     {
                         "building_type": "Building Commercial - Foundation",
-                        "value": 1988109
+                        "value": 1988109.0
                     },
                     {
                         "building_type": "Building Commercial - Rehab",
-                        "value": 3004000
+                        "value": 3004000.0
                     },
                     {
                         "building_type": "Building Commercial - Shell",
-                        "value": 80212214
+                        "value": 80212214.0
                     },
                     {
                         "building_type": "Building Commercial - Structural Frame",
-                        "value": 9964790
+                        "value": 9964790.0
                     },
                     {
                         "building_type": "Building Commercial - Tenant Finish Out",
-                        "value": 3818677
+                        "value": 3818677.0
                     },
                     {
                         "building_type": "Building Demolition Permit",
-                        "value": 107404
+                        "value": 107404.0
                     },
                     {
                         "building_type": "Building Residential - Addition",
-                        "value": 302019
+                        "value": 302019.0
                     },
                     {
                         "building_type": "Building Residential - New",
-                        "value": 124020
+                        "value": 124020.0
                     },
                     {
                         "building_type": "Building Residential - Rehab",
-                        "value": 25200
+                        "value": 25200.0
                     },
                     {
                         "building_type": "Building Sign Permit",
-                        "value": 31140
+                        "value": 31140.0
                     },
                     {
                         "building_type": "Building Use & Occupancy",
-                        "value": 4429654
+                        "value": 4429654.0
                     }
                 ]
             },
             {
                 "zip_code": 37204,
+                "total_value": 3349981,
                 "parent": 37204,
                 "children": [
                     {
                         "building_type": "Building Commercial - Rehab",
-                        "value": 1927528
+                        "value": 1927528.0
                     },
                     {
                         "building_type": "Building Commercial New Storm Damage",
-                        "value": 0
+                        "value": 0.0
                     },
                     {
                         "building_type": "Building Demolition Permit",
-                        "value": 2000
+                        "value": 2000.0
                     },
                     {
                         "building_type": "Building Residential - Addition",
-                        "value": 28000
+                        "value": 28000.0
                     },
                     {
                         "building_type": "Building Residential - New",
-                        "value": 1259757
+                        "value": 1259757.0
                     },
                     {
                         "building_type": "Building Residential - Rehab",
-                        "value": 10000
+                        "value": 10000.0
                     },
                     {
                         "building_type": "Building Sign Permit",
-                        "value": 4380
+                        "value": 4380.0
                     },
                     {
                         "building_type": "Building Use & Occupancy",
-                        "value": 118316
+                        "value": 118316.0
                     }
                 ]
             },
             {
                 "zip_code": 37205,
+                "total_value": 6572169,
                 "parent": 37205,
                 "children": [
                     {
                         "building_type": "Building Commercial - New",
-                        "value": 0
+                        "value": 0.0
                     },
                     {
                         "building_type": "Building Commercial - Rehab",
-                        "value": 2028186
+                        "value": 2028186.0
                     },
                     {
                         "building_type": "Building Commercial New Storm Damage",
-                        "value": 0
+                        "value": 0.0
                     },
                     {
                         "building_type": "Building Demolition Permit",
-                        "value": 19000
+                        "value": 19000.0
                     },
                     {
                         "building_type": "Building Residential - Addition",
-                        "value": 1659274
+                        "value": 1659274.0
                     },
                     {
                         "building_type": "Building Residential - New",
-                        "value": 1958534
+                        "value": 1958534.0
                     },
                     {
                         "building_type": "Building Residential - Rehab",
-                        "value": 610000
+                        "value": 610000.0
                     },
                     {
                         "building_type": "Building Use & Occupancy",
-                        "value": 297175
+                        "value": 297175.0
                     }
                 ]
             },
             {
                 "zip_code": 37206,
+                "total_value": 16172154,
                 "parent": 37206,
                 "children": [
                     {
                         "building_type": "Building Commercial - Addition",
-                        "value": 10000
+                        "value": 10000.0
                     },
                     {
                         "building_type": "Building Commercial - Foundation",
-                        "value": 872690
+                        "value": 872690.0
                     },
                     {
                         "building_type": "Building Commercial - New",
-                        "value": 432116
+                        "value": 432116.0
                     },
                     {
                         "building_type": "Building Commercial - Rehab",
-                        "value": 2000
+                        "value": 2000.0
                     },
                     {
                         "building_type": "Building Commercial - Shell",
-                        "value": 7837941
+                        "value": 7837941.0
                     },
                     {
                         "building_type": "Building Commercial - Tenant Finish Out",
-                        "value": 176989
+                        "value": 176989.0
                     },
                     {
                         "building_type": "Building Demolition Permit",
-                        "value": 87035
+                        "value": 87035.0
                     },
                     {
                         "building_type": "Building Residential - Addition",
-                        "value": 435538
+                        "value": 435538.0
                     },
                     {
                         "building_type": "Building Residential - New",
-                        "value": 5834940
+                        "value": 5834940.0
                     },
                     {
                         "building_type": "Building Residential - Rehab",
-                        "value": 476566
+                        "value": 476566.0
                     },
                     {
                         "building_type": "Building Residential - Roofing / Siding",
-                        "value": 6289
+                        "value": 6289.0
                     },
                     {
                         "building_type": "Building Residential Rehab Storm Damage",
-                        "value": 0
+                        "value": 0.0
                     },
                     {
                         "building_type": "Building Use & Occupancy",
-                        "value": 50
+                        "value": 50.0
                     },
                     {
                         "building_type": "Temporary Building Use & Occupancy",
-                        "value": 0
+                        "value": 0.0
                     }
                 ]
             },
             {
                 "zip_code": 37207,
+                "total_value": 49733917,
                 "parent": 37207,
                 "children": [
                     {
                         "building_type": "Building Commercial - Addition",
-                        "value": 377040
+                        "value": 377040.0
                     },
                     {
                         "building_type": "Building Commercial - New",
-                        "value": 16693410
+                        "value": 16693410.0
                     },
                     {
                         "building_type": "Building Commercial - Rehab",
-                        "value": 228241
+                        "value": 228241.0
                     },
                     {
                         "building_type": "Building Commercial - Tenant Finish Out",
-                        "value": 0
+                        "value": 0.0
                     },
                     {
                         "building_type": "Building Demolition Permit",
-                        "value": 133200
+                        "value": 133200.0
                     },
                     {
                         "building_type": "Building Residential - Addition",
-                        "value": 518624
+                        "value": 518624.0
                     },
                     {
                         "building_type": "Building Residential - New",
-                        "value": 4278056
+                        "value": 4278056.0
                     },
                     {
                         "building_type": "Building Residential - Rehab",
-                        "value": 1633057
+                        "value": 1633057.0
                     },
                     {
                         "building_type": "Building Residential - Roofing / Siding",
-                        "value": 25812484
+                        "value": 25812484.0
                     },
                     {
                         "building_type": "Building Sign Permit",
-                        "value": 21600
+                        "value": 21600.0
                     },
                     {
                         "building_type": "Building Tree Removal Permit",
-                        "value": 10000
+                        "value": 10000.0
                     },
                     {
                         "building_type": "Building Use & Occupancy",
-                        "value": 28205
+                        "value": 28205.0
                     }
                 ]
             },
             {
                 "zip_code": 37208,
+                "total_value": 9221701,
                 "parent": 37208,
                 "children": [
                     {
                         "building_type": "Building Commercial - Addition",
-                        "value": 0
+                        "value": 0.0
                     },
                     {
                         "building_type": "Building Commercial - New",
-                        "value": 5337432
+                        "value": 5337432.0
                     },
                     {
                         "building_type": "Building Commercial - Rehab",
-                        "value": 105000
+                        "value": 105000.0
                     },
                     {
                         "building_type": "Building Commercial - Tenant Finish Out",
-                        "value": 0
+                        "value": 0.0
                     },
                     {
                         "building_type": "Building Demolition Permit",
-                        "value": 45400
+                        "value": 45400.0
                     },
                     {
                         "building_type": "Building Residential - Addition",
-                        "value": 305730
+                        "value": 305730.0
                     },
                     {
                         "building_type": "Building Residential - New",
-                        "value": 2355104
+                        "value": 2355104.0
                     },
                     {
                         "building_type": "Building Residential - Rehab",
-                        "value": 967035
+                        "value": 967035.0
                     },
                     {
                         "building_type": "Building Sign Permit",
-                        "value": 1000
+                        "value": 1000.0
                     },
                     {
                         "building_type": "Building Use & Occupancy",
-                        "value": 105000
+                        "value": 105000.0
                     },
                     {
                         "building_type": "Temporary Building Use & Occupancy",
-                        "value": 0
+                        "value": 0.0
                     }
                 ]
             },
             {
                 "zip_code": 37209,
+                "total_value": 11967628,
                 "parent": 37209,
                 "children": [
                     {
                         "building_type": "Building Commercial - Addition",
-                        "value": 0
+                        "value": 0.0
                     },
                     {
                         "building_type": "Building Commercial - New",
-                        "value": 353483
+                        "value": 353483.0
                     },
                     {
                         "building_type": "Building Commercial - Rehab",
-                        "value": 4675000
+                        "value": 4675000.0
                     },
                     {
                         "building_type": "Building Demolition Permit",
-                        "value": 551100
+                        "value": 551100.0
                     },
                     {
                         "building_type": "Building Residential - Addition",
-                        "value": 716557
+                        "value": 716557.0
                     },
                     {
                         "building_type": "Building Residential - New",
-                        "value": 4929192
+                        "value": 4929192.0
                     },
                     {
                         "building_type": "Building Residential - Rehab",
-                        "value": 367651
+                        "value": 367651.0
                     },
                     {
                         "building_type": "Building Residential - Roofing / Siding",
-                        "value": 15225
+                        "value": 15225.0
                     },
                     {
                         "building_type": "Building Sign Permit",
-                        "value": 4360
+                        "value": 4360.0
                     },
                     {
                         "building_type": "Building Tree Removal Permit",
-                        "value": 5010
+                        "value": 5010.0
                     },
                     {
                         "building_type": "Building Use & Occupancy",
-                        "value": 350050
+                        "value": 350050.0
                     }
                 ]
             },
             {
                 "zip_code": 37210,
+                "total_value": 1783940,
                 "parent": 37210,
                 "children": [
                     {
                         "building_type": "Building Commercial - Addition",
-                        "value": 0
+                        "value": 0.0
                     },
                     {
                         "building_type": "Building Commercial - New",
-                        "value": 2000
+                        "value": 2000.0
                     },
                     {
                         "building_type": "Building Commercial - Rehab",
-                        "value": 0
+                        "value": 0.0
                     },
                     {
                         "building_type": "Building Commercial - Shell",
-                        "value": 0
+                        "value": 0.0
                     },
                     {
                         "building_type": "Building Demolition Permit",
-                        "value": 224025
+                        "value": 224025.0
                     },
                     {
                         "building_type": "Building Residential - Addition",
-                        "value": 239836
+                        "value": 239836.0
                     },
                     {
                         "building_type": "Building Residential - New",
-                        "value": 1273029
+                        "value": 1273029.0
                     },
                     {
                         "building_type": "Building Residential - Rehab",
-                        "value": 45000
+                        "value": 45000.0
                     },
                     {
                         "building_type": "Building Use & Occupancy",
-                        "value": 50
+                        "value": 50.0
                     }
                 ]
             },
             {
                 "zip_code": 37211,
+                "total_value": 6328368,
                 "parent": 37211,
                 "children": [
                     {
                         "building_type": "Building Commercial - Addition",
-                        "value": 65000
+                        "value": 65000.0
                     },
                     {
                         "building_type": "Building Commercial - Fire Damage",
-                        "value": 74947
+                        "value": 74947.0
                     },
                     {
                         "building_type": "Building Commercial - New",
-                        "value": 3423590
+                        "value": 3423590.0
                     },
                     {
                         "building_type": "Building Commercial - Rehab",
-                        "value": 109001
+                        "value": 109001.0
                     },
                     {
                         "building_type": "Building Commercial - Roofing / Siding",
-                        "value": 41670
+                        "value": 41670.0
                     },
                     {
                         "building_type": "Building Demolition Permit",
-                        "value": 209290
+                        "value": 209290.0
                     },
                     {
                         "building_type": "Building Residential - Addition",
-                        "value": 244853
+                        "value": 244853.0
                     },
                     {
                         "building_type": "Building Residential - New",
-                        "value": 504859
+                        "value": 504859.0
                     },
                     {
                         "building_type": "Building Residential - Rehab",
-                        "value": 1250967
+                        "value": 1250967.0
                     },
                     {
                         "building_type": "Building Residential - Roofing / Siding",
-                        "value": 363278
+                        "value": 363278.0
                     },
                     {
                         "building_type": "Building Sign Permit",
-                        "value": 33542
+                        "value": 33542.0
                     },
                     {
                         "building_type": "Building Use & Occupancy",
-                        "value": 7371
+                        "value": 7371.0
                     }
                 ]
             },
             {
                 "zip_code": 37212,
+                "total_value": 1855418,
                 "parent": 37212,
                 "children": [
                     {
                         "building_type": "Building Commercial - Rehab",
-                        "value": 22000
+                        "value": 22000.0
                     },
                     {
                         "building_type": "Building Commercial - Shell",
-                        "value": 0
+                        "value": 0.0
                     },
                     {
                         "building_type": "Building Demolition Permit",
-                        "value": 15000
+                        "value": 15000.0
                     },
                     {
                         "building_type": "Building Residential - Addition",
-                        "value": 142578
+                        "value": 142578.0
                     },
                     {
                         "building_type": "Building Residential - Change Contractor",
-                        "value": 1
+                        "value": 1.0
                     },
                     {
                         "building_type": "Building Residential - New",
-                        "value": 1377415
+                        "value": 1377415.0
                     },
                     {
                         "building_type": "Building Residential - Rehab",
-                        "value": 51000
+                        "value": 51000.0
                     },
                     {
                         "building_type": "Building Sign Permit",
-                        "value": 21700
+                        "value": 21700.0
                     },
                     {
                         "building_type": "Building Use & Occupancy",
-                        "value": 225724
+                        "value": 225724.0
                     }
                 ]
             },
             {
                 "zip_code": 37213,
+                "total_value": 0,
                 "parent": 37213,
                 "children": [
                     {
                         "building_type": "Building Commercial - Rehab",
-                        "value": 0
+                        "value": 0.0
                     }
                 ]
             },
             {
                 "zip_code": 37214,
+                "total_value": 11427932,
                 "parent": 37214,
                 "children": [
                     {
                         "building_type": "Building Commercial - New",
-                        "value": 9503581
+                        "value": 9503581.0
                     },
                     {
                         "building_type": "Building Commercial - Rehab",
-                        "value": 35000
+                        "value": 35000.0
                     },
                     {
                         "building_type": "Building Commercial - Shell",
-                        "value": 1021413
+                        "value": 1021413.0
                     },
                     {
                         "building_type": "Building Demolition Permit",
-                        "value": 49875
+                        "value": 49875.0
                     },
                     {
                         "building_type": "Building Residential - Addition",
-                        "value": 10312
+                        "value": 10312.0
                     },
                     {
                         "building_type": "Building Residential - New",
-                        "value": 49606
+                        "value": 49606.0
                     },
                     {
                         "building_type": "Building Residential - Rehab",
-                        "value": 725001
+                        "value": 725001.0
                     },
                     {
                         "building_type": "Building Residential - Roofing / Siding",
-                        "value": 0
+                        "value": 0.0
                     },
                     {
                         "building_type": "Building Sign Permit",
-                        "value": 33144
+                        "value": 33144.0
                     }
                 ]
             },
             {
                 "zip_code": 37215,
+                "total_value": 7309035,
                 "parent": 37215,
                 "children": [
                     {
                         "building_type": "Building Commercial - Addition",
-                        "value": 0
+                        "value": 0.0
                     },
                     {
                         "building_type": "Building Commercial - Foundation",
-                        "value": 2361993
+                        "value": 2361993.0
                     },
                     {
                         "building_type": "Building Commercial - Rehab",
-                        "value": 507000
+                        "value": 507000.0
                     },
                     {
                         "building_type": "Building Demolition Permit",
-                        "value": 132451
+                        "value": 132451.0
                     },
                     {
                         "building_type": "Building Residential - Addition",
-                        "value": 1159074
+                        "value": 1159074.0
                     },
                     {
                         "building_type": "Building Residential - New",
-                        "value": 1462851
+                        "value": 1462851.0
                     },
                     {
                         "building_type": "Building Residential - Rehab",
-                        "value": 988487
+                        "value": 988487.0
                     },
                     {
                         "building_type": "Building Residential - Roofing / Siding",
-                        "value": 8000
+                        "value": 8000.0
                     },
                     {
                         "building_type": "Building Use & Occupancy",
-                        "value": 689179
+                        "value": 689179.0
                     }
                 ]
             },
             {
                 "zip_code": 37216,
+                "total_value": 2662966,
                 "parent": 37216,
                 "children": [
                     {
                         "building_type": "Building Commercial - New",
-                        "value": 0
+                        "value": 0.0
                     },
                     {
                         "building_type": "Building Demolition Permit",
-                        "value": 41925
+                        "value": 41925.0
                     },
                     {
                         "building_type": "Building Residential - Addition",
-                        "value": 926924
+                        "value": 926924.0
                     },
                     {
                         "building_type": "Building Residential - New",
-                        "value": 1236820
+                        "value": 1236820.0
                     },
                     {
                         "building_type": "Building Residential - Rehab",
-                        "value": 441566
+                        "value": 441566.0
                     },
                     {
                         "building_type": "Building Residential - Roofing / Siding",
-                        "value": 15731
+                        "value": 15731.0
                     },
                     {
                         "building_type": "Building Use & Occupancy",
-                        "value": 0
+                        "value": 0.0
                     }
                 ]
             },
             {
                 "zip_code": 37217,
+                "total_value": 632949,
                 "parent": 37217,
                 "children": [
                     {
                         "building_type": "Building Commercial - Addition",
-                        "value": 0
+                        "value": 0.0
                     },
                     {
                         "building_type": "Building Commercial - New",
-                        "value": 0
+                        "value": 0.0
                     },
                     {
                         "building_type": "Building Commercial - Rehab",
-                        "value": 122915
+                        "value": 122915.0
                     },
                     {
                         "building_type": "Building Commercial - Tenant Finish Out",
-                        "value": 0
+                        "value": 0.0
                     },
                     {
                         "building_type": "Building Demolition Permit",
-                        "value": 10000
+                        "value": 10000.0
                     },
                     {
                         "building_type": "Building Residential - Addition",
-                        "value": 124164
+                        "value": 124164.0
                     },
                     {
                         "building_type": "Building Residential - New",
-                        "value": 353339
+                        "value": 353339.0
                     },
                     {
                         "building_type": "Building Residential - Rehab",
-                        "value": 0
+                        "value": 0.0
                     },
                     {
                         "building_type": "Building Residential - Roofing / Siding",
-                        "value": 21030
+                        "value": 21030.0
                     },
                     {
                         "building_type": "Building Use & Occupancy",
-                        "value": 1501
+                        "value": 1501.0
                     }
                 ]
             },
             {
                 "zip_code": 37218,
+                "total_value": 3971028,
                 "parent": 37218,
                 "children": [
                     {
                         "building_type": "Building Demolition Permit",
-                        "value": 49488
+                        "value": 49488.0
                     },
                     {
                         "building_type": "Building Residential - Addition",
-                        "value": 453655
+                        "value": 453655.0
                     },
                     {
                         "building_type": "Building Residential - New",
-                        "value": 2906279
+                        "value": 2906279.0
                     },
                     {
                         "building_type": "Building Residential - Rehab",
-                        "value": 531556
+                        "value": 531556.0
                     },
                     {
                         "building_type": "Building Sign Permit",
-                        "value": 18000
+                        "value": 18000.0
                     },
                     {
                         "building_type": "Building Use & Occupancy",
-                        "value": 12050
+                        "value": 12050.0
                     }
                 ]
             },
             {
                 "zip_code": 37219,
+                "total_value": 2573915,
                 "parent": 37219,
                 "children": [
                     {
                         "building_type": "Building Commercial - Rehab",
-                        "value": 456000
+                        "value": 456000.0
                     },
                     {
                         "building_type": "Building Commercial - Tenant Finish Out",
-                        "value": 2076699
+                        "value": 2076699.0
                     },
                     {
                         "building_type": "Building Residential - Rehab",
-                        "value": 41216
+                        "value": 41216.0
                     }
                 ]
             },
             {
                 "zip_code": 37220,
+                "total_value": 1742539,
                 "parent": 37220,
                 "children": [
                     {
                         "building_type": "Building Demolition Permit",
-                        "value": 8200
+                        "value": 8200.0
                     },
                     {
                         "building_type": "Building Residential - Addition",
-                        "value": 312481
+                        "value": 312481.0
                     },
                     {
                         "building_type": "Building Residential - New",
-                        "value": 10819
+                        "value": 10819.0
                     },
                     {
                         "building_type": "Building Residential - Rehab",
-                        "value": 1209000
+                        "value": 1209000.0
                     },
                     {
                         "building_type": "Building Residential - Roofing / Siding",
-                        "value": 19039
+                        "value": 19039.0
                     },
                     {
                         "building_type": "Building Use & Occupancy",
-                        "value": 183000
+                        "value": 183000.0
                     }
                 ]
             },
             {
                 "zip_code": 37221,
+                "total_value": 3688489,
                 "parent": 37221,
                 "children": [
                     {
                         "building_type": "Building Commercial - Addition",
-                        "value": 0
+                        "value": 0.0
                     },
                     {
                         "building_type": "Building Commercial - Rehab",
-                        "value": 700000
+                        "value": 700000.0
                     },
                     {
                         "building_type": "Building Demolition Permit",
-                        "value": 50000
+                        "value": 50000.0
                     },
                     {
                         "building_type": "Building Moving Permit",
-                        "value": 16000
+                        "value": 16000.0
                     },
                     {
                         "building_type": "Building Residential - Addition",
-                        "value": 180225
+                        "value": 180225.0
                     },
                     {
                         "building_type": "Building Residential - New",
-                        "value": 2375336
+                        "value": 2375336.0
                     },
                     {
                         "building_type": "Building Residential - Rehab",
-                        "value": 223094
+                        "value": 223094.0
                     },
                     {
                         "building_type": "Building Residential - Roofing / Siding",
-                        "value": 0
+                        "value": 0.0
                     },
                     {
                         "building_type": "Building Use & Occupancy",
-                        "value": 143834
+                        "value": 143834.0
                     }
                 ]
             },
             {
                 "zip_code": 37228,
+                "total_value": 4766366,
                 "parent": 37228,
                 "children": [
                     {
                         "building_type": "Building Commercial - Rehab",
-                        "value": 0
+                        "value": 0.0
                     },
                     {
                         "building_type": "Building Use & Occupancy",
-                        "value": 4766366
+                        "value": 4766366.0
                     }
                 ]
             },
             {
                 "zip_code": 37232,
+                "total_value": 0,
                 "parent": 37232,
                 "children": [
                     {
                         "building_type": "Building Commercial - Rehab",
-                        "value": 0
+                        "value": 0.0
                     }
                 ]
             }
