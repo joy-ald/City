@@ -3,38 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Collapsible Dendrogram with Value Bars</title>
+    <title>Davidson County Building Permits 2021-2024</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
         .node {
             cursor: pointer;
         }
         .node circle {
-            fill: #fff;
-            stroke: steelblue;
-            stroke-width: 8px;
+            stroke: #fff;
+            stroke-width: 2px;
         }
         .node text {
-            font: 18px sans-serif; /* Original font size */
-            pointer-events: none; /* Prevent mouse events on text */
+            font: 12px sans-serif;
+            pointer-events: none;
+            white-space: pre-wrap; /* Enable text wrapping */
         }
         .value-text {
-            font: 46px sans-serif; /* Increased font size for value text */
+            font: bold 14px sans-serif; /* Adjusted font size */
+            fill: black; /* Color for value display */
         }
         .link {
             fill: none;
             stroke: #ccc;
-            stroke-width: 3px;
+            stroke-width: 2px;
         }
-        .bar {
-            fill: red;
+        .tooltip {
+            position: absolute;
+            background: lightgrey;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 5px;
+            visibility: hidden;
+        }
+        .legend {
+            font: 12px sans-serif;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
-    <svg width="1200" height="800"></svg> <!-- SVG size -->
+    <svg width="800" height="600"></svg> <!-- SVG size -->
+    <div class="tooltip"></div> <!-- Tooltip for value display -->
     <script>
-        const url = 'https://github.com/joy-ald/City/blob/main/buildings_hierarchy_d3.json'; // Your JSON URL
+        const url = 'https://raw.githubusercontent.com/joy-ald/City/refs/heads/main/buildings_hierarchy_d3.json'; // Your JSON URL
 
         d3.json(url).then(data => {
             const rootData = data.city; // Access the 'city' object
@@ -46,16 +57,17 @@
 
             const svg = d3.select("svg"),
                 width = +svg.attr("width"),
-                height = +svg.attr("height");
+                height = +svg.attr("height"),
+                radius = Math.min(width, height) / 2 - 40; // Radius for the circular layout
 
-            const g = svg.append("g").attr("transform", "translate(40,0)");
+            const g = svg.append("g").attr("transform", `translate(${width / 2}, ${height / 2})`); // Center of the SVG
 
-            const tree = d3.tree().size([height - 30, width - 500]);
+            const tree = d3.tree()
+                .size([2 * Math.PI, radius])
+                .separation((a, b) => (a.parent == b.parent ? 1 : 1.5)); // Control spacing
 
-            // Render the tree
             update(root);
 
-            // Click event to toggle children
             function click(event, d) {
                 if (d.children) {
                     d.children = null; // Collapse the node
@@ -65,130 +77,129 @@
                 update(root); // Update the tree after toggling
             }
 
-            // Update function to render the tree
+            function calculateValue(d) {
+                if (d.children) {
+                    return d.children.reduce((sum, child) => sum + calculateValue(child), 0);
+                }
+                return d.data.value || 0;
+            }
+
+            // Color scale based on values
+            const colorScale = d3.scaleLinear()
+                .domain([0, d3.max(root.descendants(), d => d.data.value || 0)])
+                .range(["#f7fbff", "#2171b5"]); // From light to dark blue
+
             function update(source) {
                 const nodes = root.descendants(),
                     links = root.links();
 
                 tree(root);
-                
-                // Update nodes
+
+                // Position nodes in polar coordinates
+                nodes.forEach(d => {
+                    d.x = d.x; // Angle in radians
+                    d.y = d.y; // Radius
+                });
+
                 const node = g.selectAll(".node")
                     .data(nodes, d => d.data.zip_code || d.data.building_type); // Unique key
 
                 const nodeEnter = node.enter().append("g")
                     .attr("class", d => "node" + (d.children ? " node--internal" : " node--leaf"))
-                    .attr("transform", d => `translate(${source.y},${source.x})`)
-                    .on("click", click); // Add click event
+                    .attr("transform", d => `rotate(${(d.x * 180 / Math.PI) - 90}) translate(${d.y}, 0)`) // Polar to Cartesian conversion
+                    .on("click", click) // Add click event
+                    .on("mouseover", (event, d) => {
+                        const valueToDisplay = d.data.zip_code !== undefined
+                            ? `$${calculateValue(d)}` // Sum of children values for zip code nodes
+                            : `$${d.data.value}`; // Individual value for building types
+                        d3.select(".tooltip")
+                            .style("visibility", "visible")
+                            .text(valueToDisplay); // Display value
+                    })
+                    .on("mousemove", (event) => {
+                        d3.select(".tooltip")
+                            .style("top", (event.pageY - 10) + "px")
+                            .style("left", (event.pageX + 10) + "px"); // Move tooltip with mouse
+                    })
+                    .on("mouseout", () => {
+                        d3.select(".tooltip").style("visibility", "hidden"); // Hide tooltip
+                    });
 
-                nodeEnter.append("circle").attr("r", 10);
-                
-                // Add text with wrapping
+                const nodeDiameter = d => d.depth === 0 ? 10 : (10 / Math.pow(2, d.depth)); // Reduce size for child nodes
+                nodeEnter.append("circle")
+                    .attr("r", d => nodeDiameter(d))
+                    .attr("fill", d => {
+                        if (d.data.value) {
+                            return colorScale(d.data.value); // Color based on value
+                        }
+                        return '#fff'; // Default color for non-value nodes
+                    });
+
                 nodeEnter.append("text")
-                    .attr("dy", d => d.children ? -15 : 30)
-                    .attr("x", d => d.children ? -12 : -20)
+                    .attr("dy", 15) // Vertical adjustment
+                    .attr("x", d => d.children ? -20 : 20) // Moved left/right based on child status
                     .style("text-anchor", d => d.children ? "end" : "start")
                     .text(d => {
                         if (d.data.zip_code !== undefined) {
-                            return `Zip: ${d.data.zip_code}`;
+                            return `${d.data.zip_code}`; // Only show zip code
                         } else if (d.data.building_type) {
-                            return `${d.data.building_type}`;
+                            const buildingTypeMap = {
+                                "Building Residential - New": "ResN",
+                                "Building Commercial - New": "ComN",
+                                "Building Commercial - Rehab": "ComR",
+                              "Building Use & Occupancy": "Occu"
+                                // Add other mappings as needed
+                            };
+                            return buildingTypeMap[d.data.building_type] || d.data.building_type;
                         }
                         return d.data.parent || ""; // Default case
-                    })
-                    .call(wrap, 350); // Wrap text to fit
-
-                // Add value text separately with increased font size and dollar sign
-                nodeEnter.append("text")
-                    .attr("class", "value-text")
-                    .attr("dy", 5) // Position below the main text (adjusted)
-                    .attr("x", d => d.children ? -12 : 30)
-                    .style("text-anchor", d => d.children ? "end" : "start")
-                    .text(d => {
-                        if (d.data.building_type) {
-                            return `Value: $${d.data.value}`; // Add dollar sign
-                        }
-                        return ""; // Only display value for building types
                     });
 
-                // Transition nodes to their new position
                 nodeEnter.merge(node)
                     .transition()
                     .duration(750)
-                    .attr("transform", d => `translate(${d.y},${d.x})`);
+                    .attr("transform", d => `rotate(${(d.x * 180 / Math.PI) - 90}) translate(${d.y}, 0)`);
 
-                // Remove old nodes
                 node.exit().remove();
 
-                // Update links
                 const link = g.selectAll(".link")
                     .data(links, d => d.target.data.zip_code || d.target.data.building_type);
 
                 link.enter().append("path")
                     .attr("class", "link")
-                    .attr("d", d3.linkHorizontal()
-                        .x(d => d.y)
-                        .y(d => d.x))
+                    .attr("d", d3.linkRadial()
+                        .angle(d => d.x)
+                        .radius(d => d.y))
                     .merge(link)
                     .transition()
                     .duration(750)
-                    .attr("d", d3.linkHorizontal()
-                        .x(d => d.y)
-                        .y(d => d.x));
+                    .attr("d", d3.linkRadial()
+                        .angle(d => d.x)
+                        .radius(d => d.y));
 
                 link.exit().remove();
 
-                // Draw value bars for the last level nodes
-                const barWidth = 500; // Max width for bars
-                const valueNodes = nodes.filter(n => n.data.building_type);
-                const maxValue = d3.max(valueNodes, d => d.data.value) || 1; // Avoid divide by zero
+                // Add legend for four-letter keys
+                const legendData = [
+                    { key: "ResN", label: "Residential - New" },
+                    { key: "ComN", label: "Commercial - New" },
+                    { key: "ComR", label: "Commercial - Rehab" },
+                  {key: "BTR", label: "Building Tree Removal "},
+                  {key:"RR", label: "Building Residential - Rehab"},
+                  {key:"ResA", label: "Building Residential - Addition"}
+                    // Add other keys and labels as needed
+                ];
 
-                const bars = g.selectAll(".bar")
-                    .data(valueNodes, d => d.data.building_type); // Only get building type nodes
+                const legend = g.append("g")
+                    .attr("transform", `translate(-${width / 2 - 20}, ${height / 2 - 40})`);
 
-                // Position bars below the text on the extreme right side of the SVG
-                bars.enter().append("rect")
-                    .attr("class", "bar")
-                    .attr("x", width - 200) // Initial position, will update in the merge
-                    .attr("y", d => d.x + 15) // Position below the value text
-                    .attr("width", d => (d.data.value / maxValue) * barWidth) // Scale bar width
-                    .attr("height", 10) // Bar height
-                    .merge(bars)
-                    .transition()
-                    .duration(750)
-                    .attr("y", d => d.x + 30) // Maintain position after transition
-                    .attr("x", (d, i, nodes) => {
-                        const textWidth = d3.select(nodes[i]).select("text").node().getComputedTextLength();
-                        return width - 250 + 10 ; // Add gap between text and bar
-                    }) // Update x position based on text width
-                    .attr("width", d => (d.data.value / maxValue) * barWidth); // Update width for transitions
-
-                bars.exit().remove();
-            }
-
-            // Function to wrap text
-            function wrap(text, width) {
-                text.each(function () {
-                    const textElement = d3.select(this);
-                    const words = textElement.text().split(/\s+/).reverse();
-                    let word,
-                        line = [],
-                        lineHeight = 1.1, // ems
-                        x = textElement.attr("x"),
-                        y = textElement.attr("y"),
-                        tspan = textElement.text(null).append("tspan").attr("x", x).attr("y", y);
-
-                    while (word = words.pop()) {
-                        line.push(word);
-                        tspan.text(line.join(" "));
-                        if (tspan.node().getComputedTextLength() > width) {
-                            line.pop();
-                            tspan.text(line.join(" "));
-                            line = [word];
-                            tspan = textElement.append("tspan").attr("x", x).attr("y", y).attr("dy", `${lineHeight}em`).text(word);
-                        }
-                    }
-                });
+                legend.selectAll(".legend-item")
+                    .data(legendData)
+                    .enter().append("text")
+                    .attr("class", "legend-item")
+                    .attr("x", 0)
+                    .attr("y", (d, i) => i * 15)
+                    .text(d => `${d.key}: ${d.label}`);
             }
         });
     </script>
