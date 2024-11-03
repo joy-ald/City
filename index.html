@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Davidson County Building Permits 2021-2024</title>
+    <title>Circular Dendrogram with Hover Values</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
         .node {
             cursor: pointer;
         }
         .node circle {
-            stroke: #fff;
-            stroke-width: 2px;
+            fill: #fff;
+            stroke: steelblue;
+            stroke-width: 3px;
         }
         .node text {
             font: 12px sans-serif;
@@ -84,11 +85,6 @@
                 return d.data.value || 0;
             }
 
-            // Color scale based on values
-            const colorScale = d3.scaleLinear()
-                .domain([0, d3.max(root.descendants(), d => d.data.value || 0)])
-                .range(["#f7fbff", "#2171b5"]); // From light to dark blue
-
             function update(source) {
                 const nodes = root.descendants(),
                     links = root.links();
@@ -129,8 +125,10 @@
                 nodeEnter.append("circle")
                     .attr("r", d => nodeDiameter(d))
                     .attr("fill", d => {
+                        const maxValue = d3.max(nodes.filter(n => n.data.value), n => n.data.value);
+                        const minValue = d3.min(nodes.filter(n => n.data.value), n => n.data.value);
                         if (d.data.value) {
-                            return colorScale(d.data.value); // Color based on value
+                            return d.data.value === maxValue ? 'darkred' : (d.data.value === minValue ? 'lightcoral' : 'lightblue');
                         }
                         return '#fff'; // Default color for non-value nodes
                     });
@@ -146,8 +144,7 @@
                             const buildingTypeMap = {
                                 "Building Residential - New": "ResN",
                                 "Building Commercial - New": "ComN",
-                                "Building Commercial - Rehab": "ComR",
-                              "Building Use & Occupancy": "Occu"
+                                "Building Commercial - Rehab": "ComR"
                                 // Add other mappings as needed
                             };
                             return buildingTypeMap[d.data.building_type] || d.data.building_type;
@@ -183,10 +180,7 @@
                 const legendData = [
                     { key: "ResN", label: "Residential - New" },
                     { key: "ComN", label: "Commercial - New" },
-                    { key: "ComR", label: "Commercial - Rehab" },
-                  {key: "BTR", label: "Building Tree Removal "},
-                  {key:"RR", label: "Building Residential - Rehab"},
-                  {key:"ResA", label: "Building Residential - Addition"}
+                    { key: "ComR", label: "Commercial - Rehab" }
                     // Add other keys and labels as needed
                 ];
 
