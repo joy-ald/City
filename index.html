@@ -17,11 +17,11 @@
         .node text {
             font: 12px sans-serif;
             pointer-events: none;
-            white-space: pre-wrap; /* Enable text wrapping */
+            white-space: pre-wrap;
         }
         .value-text {
-            font: bold 14px sans-serif; /* Adjusted font size */
-            fill: black; /* Color for value display */
+            font: bold 14px sans-serif;
+            fill: black;
         }
         .link {
             fill: none;
@@ -43,39 +43,39 @@
     </style>
 </head>
 <body>
-    <svg width="800" height="600"></svg> <!-- SVG size -->
-    <div class="tooltip"></div> <!-- Tooltip for value display -->
+    <svg width="1200" height="600"></svg> <!-- Increased width for the bar chart -->
+    <div class="tooltip"></div>
     <script>
         const url = 'https://raw.githubusercontent.com/joy-ald/City/refs/heads/main/buildings_hierarchy_d3.json'; // Your JSON URL
 
         d3.json(url).then(data => {
-            const rootData = data.city; // Access the 'city' object
+            const rootData = data.city; 
             const root = d3.hierarchy(rootData, d => d.children);
             root.descendants().forEach(d => {
-                d._children = d.children; // Store the original children
-                if (d.children) d.children = null; // Start with children collapsed
+                d._children = d.children;
+                if (d.children) d.children = null; 
             });
 
             const svg = d3.select("svg"),
                 width = +svg.attr("width"),
                 height = +svg.attr("height"),
-                radius = Math.min(width, height) / 2 - 40; // Radius for the circular layout
+                radius = Math.min(width, height) / 2 - 40; 
 
-            const g = svg.append("g").attr("transform", `translate(${width / 2}, ${height / 2})`); // Center of the SVG
+            const g = svg.append("g").attr("transform", `translate(${width / 3}, ${height / 2})`); // Shift to the left
 
             const tree = d3.tree()
                 .size([2 * Math.PI, radius])
-                .separation((a, b) => (a.parent == b.parent ? 1 : 1.5)); // Control spacing
+                .separation((a, b) => (a.parent == b.parent ? 0.5 : 1.5)); // Reduce separation
 
             update(root);
 
             function click(event, d) {
                 if (d.children) {
-                    d.children = null; // Collapse the node
+                    d.children = null; 
                 } else {
-                    d.children = d._children; // Expand the node
+                    d.children = d._children; 
                 }
-                update(root); // Update the tree after toggling
+                update(root);
             }
 
             function calculateValue(d) {
@@ -91,37 +91,36 @@
 
                 tree(root);
 
-                // Position nodes in polar coordinates
                 nodes.forEach(d => {
                     d.x = d.x; // Angle in radians
                     d.y = d.y; // Radius
                 });
 
                 const node = g.selectAll(".node")
-                    .data(nodes, d => d.data.zip_code || d.data.building_type); // Unique key
+                    .data(nodes, d => d.data.zip_code || d.data.building_type);
 
                 const nodeEnter = node.enter().append("g")
                     .attr("class", d => "node" + (d.children ? " node--internal" : " node--leaf"))
-                    .attr("transform", d => `rotate(${(d.x * 180 / Math.PI) - 90}) translate(${d.y}, 0)`) // Polar to Cartesian conversion
-                    .on("click", click) // Add click event
+                    .attr("transform", d => `rotate(${(d.x * 180 / Math.PI) - 90}) translate(${d.y}, 0)`)
+                    .on("click", click)
                     .on("mouseover", (event, d) => {
                         const valueToDisplay = d.data.zip_code !== undefined
-                            ? `$${calculateValue(d)}` // Sum of children values for zip code nodes
-                            : `$${d.data.value}`; // Individual value for building types
+                            ? `$${calculateValue(d)}`
+                            : `$${d.data.value}`;
                         d3.select(".tooltip")
                             .style("visibility", "visible")
-                            .text(valueToDisplay); // Display value
+                            .text(valueToDisplay);
                     })
                     .on("mousemove", (event) => {
                         d3.select(".tooltip")
                             .style("top", (event.pageY - 10) + "px")
-                            .style("left", (event.pageX + 10) + "px"); // Move tooltip with mouse
+                            .style("left", (event.pageX + 10) + "px");
                     })
                     .on("mouseout", () => {
-                        d3.select(".tooltip").style("visibility", "hidden"); // Hide tooltip
+                        d3.select(".tooltip").style("visibility", "hidden");
                     });
 
-                const nodeDiameter = d => d.depth === 0 ? 10 : (10 / Math.pow(2, d.depth)); // Reduce size for child nodes
+                const nodeDiameter = d => d.depth === 0 ? 10 : (10 / Math.pow(2, d.depth));
                 nodeEnter.append("circle")
                     .attr("r", d => nodeDiameter(d))
                     .attr("fill", d => {
@@ -130,26 +129,25 @@
                         if (d.data.value) {
                             return d.data.value === maxValue ? 'darkred' : (d.data.value === minValue ? 'lightcoral' : 'lightblue');
                         }
-                        return '#fff'; // Default color for non-value nodes
+                        return '#fff';
                     });
 
                 nodeEnter.append("text")
-                    .attr("dy", 15) // Vertical adjustment
-                    .attr("x", d => d.children ? -20 : 20) // Moved left/right based on child status
+                    .attr("dy", 15)
+                    .attr("x", d => d.children ? -20 : 20)
                     .style("text-anchor", d => d.children ? "end" : "start")
                     .text(d => {
                         if (d.data.zip_code !== undefined) {
-                            return `${d.data.zip_code}`; // Only show zip code
+                            return `${d.data.zip_code}`;
                         } else if (d.data.building_type) {
                             const buildingTypeMap = {
                                 "Building Residential - New": "ResN",
                                 "Building Commercial - New": "ComN",
                                 "Building Commercial - Rehab": "ComR"
-                                // Add other mappings as needed
                             };
                             return buildingTypeMap[d.data.building_type] || d.data.building_type;
                         }
-                        return d.data.parent || ""; // Default case
+                        return d.data.parent || "";
                     });
 
                 nodeEnter.merge(node)
@@ -166,36 +164,18 @@
                     .attr("class", "link")
                     .attr("d", d3.linkRadial()
                         .angle(d => d.x)
-                        .radius(d => d.y))
+                        .radius(d => d.y * 0.9)) // Reduce link length
                     .merge(link)
                     .transition()
                     .duration(750)
                     .attr("d", d3.linkRadial()
                         .angle(d => d.x)
-                        .radius(d => d.y));
+                        .radius(d => d.y * 0.9)); // Reduce link length
 
                 link.exit().remove();
-
-                // Add legend for four-letter keys
-                const legendData = [
-                    { key: "ResN", label: "Residential - New" },
-                    { key: "ComN", label: "Commercial - New" },
-                    { key: "ComR", label: "Commercial - Rehab" }
-                    // Add other keys and labels as needed
-                ];
-
-                const legend = g.append("g")
-                    .attr("transform", `translate(-${width / 2 - 20}, ${height / 2 - 40})`);
-
-                legend.selectAll(".legend-item")
-                    .data(legendData)
-                    .enter().append("text")
-                    .attr("class", "legend-item")
-                    .attr("x", 0)
-                    .attr("y", (d, i) => i * 15)
-                    .text(d => `${d.key}: ${d.label}`);
             }
         });
     </script>
+    <div id="bar-chart" style="float: right; width: 400px;"></div> <!-- Container for the bar chart -->
 </body>
 </html>
