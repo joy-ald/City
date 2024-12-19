@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Dendrogram with D3.js</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        .link {
+            fill: none;
+            stroke: #ccc;
+            stroke-width: 2px;
+        }
+        .node circle {
+            fill: #fff;
+            stroke: steelblue;
+            stroke-width: 3px;
+        }
+        .node text {
+            font: 12px sans-serif;
+        }
+        .tooltip {
+            position: absolute;
+            text-align: center;
+            padding: 6px;
+            font: 12px sans-serif;
+            background: lightsteelblue;
+            border: 1px solid #999;
+            border-radius: 4px;
+            pointer-events: none;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="tooltip" id="tooltip"></div>
+    <svg id="dendrogram"></svg>
+
+    <script>
+        const svg = d3.select("#dendrogram")
+            .attr("viewBox", [0, 0, window.innerWidth, window.innerHeight])
+            .style("font", "10px sans-serif");
+
+        const tooltip = d3.select("#tooltip");
+
+        // Load JSON data from your GitHub repository
+        d3.json("https://raw.githubusercontent.com/joy-ald/City/refs/heads/main/buildings_hierarchy_d3.json").then(function(data) {
+            const root = d3.hierarchy(data);
+            root.children.forEach(collapse); // Collapse all nodes initially
+
+            function draw(data) {
+                const width = window.innerWidth;
+                const height = window.innerHeight;
+
+                const treeLayout = d3.tree()
+                    .size([height - 40, width - 160]);
+
+                treeLayout(root);
+
+                svg.selectAll("*").remove(); // Clear previous content
+
+                const g = svg.append("g").attr("transform", "translate(40,0)");
+
+                g.append("g")
+                    .selectAll(".link")
+                    .data(root.links())
+                    .enter()
+                    .append("path")
+                    .attr("class", "link")
+                    .attr("d", d3.linkVertical()
+                        .x(d => d.y)
+                        .y(d => d.x));
+
+                const node = g.append("g")
+                    .selectAll(".node")
+                    .data(root.descendants())
+                    .enter()
+                    .append("g")
+                    .attr("class", d => "node" + (d.children ? " node--internal" : " node--leaf"))
+                    .attr("transform", d => `translate(${d.y},${d.x})`)
+                    .on("mouseover", function(event, d) {
+                        tooltip.transition().duration(200).style("opacity", 0.9);
+                        tooltip.html(d.data.name)
+                            .style("left", (event.pageX + 5) + "px")
+                            .style("top", (event.pageY - 28) + "px");
+                    })
+                    .on("mouseout", function() {
+                        tooltip.transition().duration(500).style("opacity", 0);
+                    })
+                    .on("click", (event, d) => {
+                        // Toggle the collapse/expand functionality
+                        if (d.children) {
+                            d._children = d.children; // Store children
+                            d.children = null; // Remove children to collapse
+                        } else {
+                            d.children = d._children; // Restore children to expand
+                            d._children = null;
+                        }
+                        draw(data); // Redraw the tree
+                    });
+
+                node.append("circle")
+                    .attr("r", 4);
+
+                node.append("text")
+                    .attr("dy", 3)
+                    .attr("x", d => d.children ? -8 : 8)
+                    .style("text-anchor", d => d.children ? "end" : "start")
+                    .text(d => d.data.name);
+            }
+
+            draw(data); // Initial draw
+
+            // Zoom functionality
+            const zoom = d3.zoom()
+                .scaleExtent([0.5, 3])
+                .on("zoom", (event) => {
+                    svg.attr("transform", event.transform);
+                });
+
+            svg.call(zoom);
+
+            // Resize SVG on window resize
+            window.addEventListener('resize', () => {
+                svg.attr("viewBox", [0, 0, window.innerWidth, window.innerHeight]);
+                draw(data); // Redraw with new dimensions
+            });
+        });
+
+        function collapse(d) {
+            if (d.children) {
+                d._children = d.children; // Store children for later
+                d.children = null; // Remove children
+            }
+        }
+    </script>
+</body>
+</html>

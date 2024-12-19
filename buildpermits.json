@@ -1,0 +1,83 @@
+{
+    "city": {
+        "parent": "city",
+        "children": [
+            {
+                "zip_code": 0,
+                "parent": 0,
+                "children": [
+                    {
+                        "building_type": "Building Residential - New",
+                        "value": 348983
+                    }
+                ]
+            },
+            
+            {
+                "zip_code": 37013,
+                "parent": 37013,
+                "children": [
+                    {
+                        "building_type": "Building Commercial - New",
+                        "value": 2726875
+                    },
+                    {
+                        "building_type": "Building Commercial - Rehab",
+                        "value": 721
+                    },
+                    {
+                        "building_type": "Building Commercial - Shell",
+                        "value": 0
+                    },
+                    {
+                        "building_type": "Building Commercial New Storm Damage",
+                        "value": 0
+                    },
+                    {
+                        "building_type": "Building Demolition Permit",
+                        "value": 30000
+                    },
+                    {
+                        "building_type": "Building Residential - Addition",
+                        "value": 141458
+                    },
+                    {
+                        "building_type": "Building Residential - New",
+                        "value": 850365
+                    },
+                    {
+                        "building_type": "Building Residential - Rehab",
+                        "value": 91663
+                    },
+                    {
+                        "building_type": "Building Residential - Roofing / Siding",
+                        "value": 18241
+                    },
+                    {
+                        "building_type": "Building Sign Permit",
+                        "value": 37521
+                    },
+                    {
+                        "building_type": "Building Tree Removal Permit",
+                        "value": 20010
+                    },
+                    {
+                        "building_type": "Building Use & Occupancy",
+                        "value": 2143994
+                    }
+                ]
+            },
+            {
+                "zip_code": 37015,
+                "parent": 37015,
+                "children": [
+                    {
+                        "building_type": "Building Residential - Addition",
+                        "value": 0
+                    }
+                ]
+            }
+            
+        ]
+    }
+}

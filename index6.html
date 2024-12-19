@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circular Dendrogram with Bar Chart</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        .tooltip {
+            position: absolute;
+            text-align: center;
+            width: auto;
+            padding: 5px;
+            font: 12px sans-serif;
+            background: lightsteelblue;
+            border: 0px;
+            border-radius: 8px;
+            pointer-events: none;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="tooltip"></div>
+    <svg width="600" height="600"></svg>
+    <div id="bar-chart"></div>
+
+    <script>
+        // Load JSON data
+        fetch('https://raw.githubusercontent.com/joy-ald/City/refs/heads/main/buildings_hierarchy_d3.json')
+            .then(response => response.json())
+            .then(data => {
+                createDendrogram(data.city); // Pass the "city" object directly
+            })
+            .catch(error => console.error('Error fetching the JSON data:', error));
+
+        // Create a formatter for dollar values
+        const formatDollar = (value) => {
+            return `$${value.toLocaleString()}`;
+        };
+
+        // Create Circular Dendrogram
+        function createDendrogram(data) {
+            const width = 600, height = 600;
+            const radius = Math.min(width, height) / 2;
+
+            const svg = d3.select("svg")
+                .attr("width", width)
+                .attr("height", height)
+                .append("g")
+                .attr("transform", `translate(${width / 2}, ${height / 2})`);
+
+            // Prepare hierarchy data
+            const hierarchyData = {
+                name: "City",
+                children: data.children.map(zip => ({
+                    name: `Zip: ${zip.zip_code}`,
+                    total_value: zip.total_value,
+                    children: zip.children.map(building => ({
+                        name: building.building_type,
+                        value: building.value
+                    }))
+                }))
+            };
+
+            const root = d3.hierarchy(hierarchyData)
+                .sum(d => d.value || d.total_value); // Sum to get the total values for the nodes
+
+            const partition = d3.partition().size([2 * Math.PI, radius]);
+            partition(root);
+
+            const arc = d3.arc()
+                .startAngle(d => d.x0)
+                .endAngle(d => d.x1)
+                .innerRadius(d => d.y0)
+                .outerRadius(d => d.y1);
+
+            // Create a color scale
+            const color = d3.scaleOrdinal(d3.schemeCategory10);
+
+            svg.selectAll('path')
+                .data(root.descendants())
+                .enter()
+                .append('path')
+                .attr('d', arc)
+                .attr('fill', d => d.children ? color(d.data.name) : color(d.data.name)) // Color by name
+                .attr('stroke', '#fff')
+                .on('mouseover', function(event, d) {
+                    d3.select('.tooltip')
+                        .style('opacity', 1)
+                        .html(`${d.data.name}: ${formatDollar(d.data.value || d.data.total_value)}`)
+                        .style('left', (event.pageX + 5) + 'px')
+                        .style('top', (event.pageY - 28) + 'px');
+                })
+                .on('mouseout', function() {
+                    d3.select('.tooltip').style('opacity', 0);
+                })
+                .on('click', function(event, d) {
+                    if (!d.children) {
+                        createBarChart(d.data.name, data.children.find(zip => `Zip: ${zip.zip_code}` === d.data.name)); // Create bar chart for the clicked zip code
+                    }
+                });
+
+            // Create Bar Chart
+            function createBarChart(zipCode, zipData) {
+                const barData = zipData.children.map(building => ({
+                    type: building.building_type,
+                    value: building.value
+                }));
+
+                d3.select("#bar-chart").selectAll("*").remove(); // Clear previous chart
+
+                const margin = { top: 20, right: 30, bottom: 40, left: 40 },
+                      widthBar = 400 - margin.left - margin.right,
+                      heightBar = 300 - margin.top - margin.bottom;
+
+                const x = d3.scaleBand()
+                    .domain(barData.map(d => d.type))
+                    .range([0, widthBar])
+                    .padding(0.1);
+
+                const y = d3.scaleLinear()
+                    .domain([0, d3.max(barData, d => d.value)])
+                    .nice()
+                    .range([heightBar, 0]);
+
+                const barSvg = d3.select("#bar-chart").append("svg")
+                    .attr("width", widthBar + margin.left + margin.right)
+                    .attr("height", heightBar + margin.top + margin.bottom)
+                    .append("g")
+                    .attr("transform", `translate(${margin.left},${margin.top})`);
+
+                barSvg.selectAll(".bar")
+                    .data(barData)
+                    .enter().append("rect")
+                    .attr("class", "bar")
+                    .attr("x", d => x(d.type))
+                    .attr("width", x.bandwidth())
+                    .attr("y", d => y(d.value))
+                    .attr("height", d => heightBar - y(d.value));
+
+                barSvg.append("g")
+                    .attr("transform", `translate(0,${heightBar})`)
+                    .call(d3.axisBottom(x));
+
+                barSvg.append("g")
+                    .call(d3.axisLeft(y).tickFormat(formatDollar)); // Format y-axis ticks
+            }
+        }
+    </script>
+</body>
+</html>
+

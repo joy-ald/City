@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collapsible Dendrogram</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        .node {
+            cursor: pointer;
+        }
+        .node circle {
+            fill: #fff;
+            stroke: steelblue;
+            stroke-width: 3px;
+        }
+        .node text {
+            font: 12px sans-serif;
+            pointer-events: none; /* Prevent mouse events on text */
+        }
+        .link {
+            fill: none;
+            stroke: #ccc;
+            stroke-width: 2px;
+        }
+    </style>
+</head>
+<body>
+    <svg width="1200" height="800"></svg> <!-- SVG size -->
+    <script>
+        const url = 'https://raw.githubusercontent.com/joy-ald/City/refs/heads/main/buildings_hierarchy_d3.json'; // Your JSON URL
+
+        d3.json(url).then(data => {
+            const rootData = data.city; // Access the 'city' object
+            const root = d3.hierarchy(rootData, d => d.children);
+            root.descendants().forEach(d => {
+                d._children = d.children; // Store the original children
+                if (d.children) d.children = null; // Start with children collapsed
+            });
+
+            const svg = d3.select("svg"),
+                width = +svg.attr("width"),
+                height = +svg.attr("height");
+
+            const g = svg.append("g").attr("transform", "translate(40,0)");
+
+            const tree = d3.tree().size([height - 200, width - 200]);
+
+            // Render the tree
+            update(root);
+
+            // Click event to toggle children
+            function click(event, d) {
+                if (d.children) {
+                    d.children = null; // Collapse the node
+                } else {
+                    d.children = d._children; // Expand the node
+                }
+                update(root); // Update the tree after toggling
+            }
+
+            // Update function to render the tree
+            function update(source) {
+                const nodes = root.descendants(),
+                    links = root.links();
+
+                tree(root);
+                
+                // Update nodes
+                const node = g.selectAll(".node")
+                    .data(nodes, d => d.data.zip_code || d.data.building_type); // Unique key
+
+                const nodeEnter = node.enter().append("g")
+                    .attr("class", d => "node" + (d.children ? " node--internal" : " node--leaf"))
+                    .attr("transform", d => `translate(${source.y},${source.x})`)
+                    .on("click", click); // Add click event
+
+                nodeEnter.append("circle").attr("r", 10);
+                
+                // Add text with wrapping
+                nodeEnter.append("text")
+                    .attr("dy", 3)
+                    .attr("x", d => d.children ? -12 : 12)
+                    .style("text-anchor", d => d.children ? "end" : "start")
+                    .text(d => {
+                        // Show zip_code for first level and building_type + value for others
+                        if (d.data.zip_code !== undefined) {
+                            return `Zip: ${d.data.zip_code}`;
+                        } else if (d.data.building_type) {
+                            return `${d.data.building_type} (Value: ${d.data.value})`;
+                        }
+                        return d.data.parent || ""; // Default case
+                    })
+                    .call(wrap, 150); // Wrap text to fit
+
+                // Transition nodes to their new position
+                nodeEnter.merge(node)
+                    .transition()
+                    .duration(750)
+                    .attr("transform", d => `translate(${d.y},${d.x})`);
+
+                // Remove old nodes
+                node.exit().remove();
+
+                // Update links
+                const link = g.selectAll(".link")
+                    .data(links, d => d.target.data.zip_code || d.target.data.building_type);
+
+                link.enter().append("path")
+                    .attr("class", "link")
+                    .attr("d", d3.linkHorizontal()
+                        .x(d => d.y)
+                        .y(d => d.x))
+                    .merge(link)
+                    .transition()
+                    .duration(750)
+                    .attr("d", d3.linkHorizontal()
+                        .x(d => d.y)
+                        .y(d => d.x));
+
+                link.exit().remove();
+            }
+
+            // Function to wrap text
+            function wrap(text, width) {
+                text.each(function () {
+                    const textElement = d3.select(this);
+                    const words = textElement.text().split(/\s+/).reverse();
+                    let word,
+                        line = [],
+                        lineHeight = 1.1, // ems
+                        x = textElement.attr("x"),
+                        y = textElement.attr("y"),
+                        tspan = textElement.text(null).append("tspan").attr("x", x).attr("y", y);
+
+                    while (word = words.pop()) {
+                        line.push(word);
+                        tspan.text(line.join(" "));
+                        if (tspan.node().getComputedTextLength() > width) {
+                            line.pop();
+                            tspan.text(line.join(" "));
+                            line = [word];
+                            tspan = textElement.append("tspan").attr("x", x).attr("y", y).attr("dy", `${lineHeight}em`).text(word);
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

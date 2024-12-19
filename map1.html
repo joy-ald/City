@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Selection Map</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        #map {
+            width: 800px;
+            height: 600px;
+            border: 1px solid #ccc;
+        }
+        /* Add additional styles for your dendrogram and bar chart */
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <div id="dendrogram"></div>
+    <div id="bar-chart"></div>
+
+    <script>
+        const width = 800;
+        const height = 600;
+
+        const svg = d3.select("#map").append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        const projection = d3.geoAlbersUsa()
+            .scale(1000)
+            .translate([width / 2, height / 2]);
+
+        const path = d3.geoPath().projection(projection);
+
+        // Load GeoJSON data for the USA
+        d3.json('path/to/your/geojson.json').then(data => {
+            svg.selectAll("path")
+                .data(data.features)
+                .enter().append("path")
+                .attr("d", path)
+                .attr("fill", "#ccc")
+                .attr("stroke", "#333")
+                .on("click", (event, d) => {
+                    const cityName = d.properties.name; // Adjust according to your GeoJSON structure
+                    loadCityData(cityName); // Function to load city-specific data
+                    zoomOut(); // Function to zoom out the map
+                });
+        });
+
+        function loadCityData(city) {
+            // Load and display dendrogram and bar chart data for the selected city
+            // You can use similar logic to what you have for the dendrogram and bar chart
+        }
+
+        function zoomOut() {
+            svg.transition()
+                .duration(750)
+                .attr("transform", "scale(0.5) translate(100, 100)"); // Adjust values as needed
+        }
+
+        // Add double-click to zoom back in
+        svg.on("dblclick", () => {
+            svg.transition()
+                .duration(750)
+                .attr("transform", "scale(1) translate(0, 0)"); // Reset the transform
+        });
+    </script>
+</body>
+</html>

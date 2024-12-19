@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Davidson County Building Permits 2021-2024</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            display: flex;
+        }
+        svg {
+            border-right: 1px solid #ccc; /* Optional border between dendrogram and bar chart */
+        }
+        .node {
+            cursor: pointer;
+        }
+        .node circle {
+            fill: #fff;
+            stroke: steelblue;
+            stroke-width: 3px;
+        }
+        .node text {
+            font: 12px sans-serif;
+            pointer-events: none;
+            white-space: pre-wrap; /* Enable text wrapping */
+            transform: translate(5px, 0); /* Adjust position for horizontal display */
+        }
+        .value-text {
+            font: bold 16px sans-serif; /* Increased font size */
+            fill: black; /* Color for value display */
+        }
+        .link {
+            fill: none;
+            stroke: #ccc;
+            stroke-width: 2px;
+        }
+        .tooltip {
+            position: absolute;
+            background: lightgrey;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 5px;
+            visibility: hidden;
+        }
+        .legend {
+            font: 14px sans-serif; /* Font size for legend */
+            margin-top: 10px;
+        }
+        #bar-chart {
+            margin-left: 20px; /* Space between dendrogram and bar chart */
+        }
+    </style>
+</head>
+<body>
+    <svg width="800" height="600"></svg> <!-- SVG size for dendrogram -->
+    <div id="bar-chart"></div> <!-- Container for the bar chart -->
+    <div class="tooltip"></div> <!-- Tooltip for value display -->
+    <script>
+        const url = 'https://raw.githubusercontent.com/joy-ald/City/refs/heads/main/buildings_hierarchy_d3.json'; // Your JSON URL
+
+        d3.json(url).then(data => {
+            const rootData = data.city; // Access the 'city' object
+            const root = d3.hierarchy(rootData, d => d.children);
+            root.descendants().forEach(d => {
+                d._children = d.children; // Store the original children
+                if (d.children) d.children = null; // Start with children collapsed
+            });
+
+            const svg = d3.select("svg"),
+                width = +svg.attr("width"),
+                height = +svg.attr("height"),
+                radius = Math.min(width, height) / 2 - 40; // Radius for the circular layout
+
+            const g = svg.append("g").attr("transform", `translate(${width / 2}, ${height / 2})`); // Center of the SVG
+
+            const tree = d3.tree()
+                .size([2 * Math.PI, radius])
+                .separation((a, b) => (a.parent == b.parent ? 1 : 1.5)); // Control spacing
+
+            update(root);
+
+            function click(event, d) {
+                if (d.children) {
+                    d.children = null; // Collapse the node
+                } else {
+                    d.children = d._children; // Expand the node
+                }
+                update(root); // Update the tree after toggling
+
+                // Show bar chart for zip code nodes
+                if (d.data.zip_code !== undefined) {
+                    createBarChart(d.data.zip_code, d.data.children);
+                } else {
+                    d3.select("#bar-chart").selectAll("*").remove(); // Clear the bar chart if not a zip code
+                }
+            }
+
+            function calculateValue(d) {
+                if (d.children) {
+                    return d.children.reduce((sum, child) => sum + calculateValue(child), 0);
+                }
+                return d.data.value || 0;
+            }
+
+            function update(source) {
+                const nodes = root.descendants(),
+                    links = root.links();
+
+                tree(root);
+
+                // Position nodes in polar coordinates
+                nodes.forEach(d => {
+                    d.x = d.x; // Angle in radians
+                    d.y = d.y; // Radius
+                });
+
+                const node = g.selectAll(".node")
+                    .data(nodes, d => d.data.zip_code || d.data.building_type); // Unique key
+
+                const nodeEnter = node.enter().append("g")
+                    .attr("class", d => "node" + (d.children ? " node--internal" : " node--leaf"))
+                    .attr("transform", d => `rotate(${(d.x * 180 / Math.PI) - 90}) translate(${d.y}, 0)`) // Polar to Cartesian conversion
+                    .on("click", click) // Add click event
+                    .on("mouseover", (event, d) => {
+                        const valueToDisplay = d.data.zip_code !== undefined
+                            ? `$${calculateValue(d)}` // Sum of children values for zip code nodes
+                            : `$${d.data.value}`; // Individual value for building types
+                        d3.select(".tooltip")
+                            .style("visibility", "visible")
+                            .text(valueToDisplay); // Display value
+                    })
+                    .on("mousemove", (event) => {
+                        d3.select(".tooltip")
+                            .style("top", (event.pageY - 10) + "px")
+                            .style("left", (event.pageX + 10) + "px"); // Move tooltip with mouse
+                    })
+                    .on("mouseout", () => {
+                        d3.select(".tooltip").style("visibility", "hidden"); // Hide tooltip
+                    });
+
+                const nodeDiameter = d => d.depth === 0 ? 10 : (10 / Math.pow(2, d.depth)); // Reduce size for child nodes
+                nodeEnter.append("circle")
+                    .attr("r", d => nodeDiameter(d))
+                    .attr("fill", d => {
+                        const maxValue = d3.max(nodes.filter(n => n.data.value), n => n.data.value);
+                        const minValue = d3.min(nodes.filter(n => n.data.value), n => n.data.value);
+                        if (d.data.value) {
+                            return d.data.value === maxValue ? 'darkred' : (d.data.value === minValue ? 'lightcoral' : d3.schemeCategory10[d.depth % 10]);
+                        }
+                        return '#fff'; // Default color for non-value nodes
+                    });
+
+                nodeEnter.append("text")
+                    .attr("dy", 15) // Vertical adjustment
+                    .attr("x", 0) // Center horizontally
+                    .style("text-anchor", "middle")
+                    .text(d => {
+                        if (d.data.zip_code !== undefined) {
+                            return `${d.data.zip_code}`; // Show zip code
+                        } else if (d.data.building_type) {
+                            const buildingTypeMap = {
+                                "Building Residential - Addition": "ResA",
+                                "Building Use & Occupancy": "UseO",
+                                "Building Residential - New": "ResN",
+                                "Building Residential - Rehab": "ResR",
+                                "Building Demolition Permit": "DemP",
+                                "Building Residential - Roofing / Siding": "Roof",
+                                "Building Commercial - Tenant Finish Out": "ComT",
+                                "Building Sign Permit": "Sign",
+                                "Building Commercial - New": "ComN",
+                                "Building Commercial New Storm Damage": "ComD",
+                                "Building Commercial - Rehab": "ComR",
+                                "Building Commercial - Addition": "ComA",
+                                "Temporary Building Use & Occupancy": "TempO",
+                                "Building Tree Removal Permit": "Tree",
+                                "Building Commercial - Shell": "ComS",
+                                "Building Moving Permit": "Move",
+                                "Building Commercial - Fire Damage": "ComF",
+                                "Building Commercial - Structural Frame": "ComF",
+                                "Building Commercial - Foundation": "ComF",
+                                "Building Residential - Change Contractor": "ResC",
+                                "Building Commercial - Roofing / Siding": "ComR",
+                                "Building Residential Rehab Storm Damage": "ResD"
+                                // Add other mappings as needed
+                            };
+                            return buildingTypeMap[d.data.building_type] || d.data.building_type;
+                        }
+                        return d.data.parent || ""; // Default case
+                    });
+
+                nodeEnter.merge(node)
+                    .transition()
+                    .duration(750)
+                    .attr("transform", d => `rotate(${(d.x * 180 / Math.PI) - 90}) translate(${d.y}, 0)`);
+
+                node.exit().remove();
+
+                const link = g.selectAll(".link")
+                    .data(links, d => d.target.data.zip_code || d.target.data.building_type);
+
+                link.enter().append("path")
+                    .attr("class", "link")
+                    .attr("d", d3.linkRadial()
+                        .angle(d => d.x)
+                        .radius(d => d.y))
+                    .merge(link)
+                    .transition()
+                    .duration(750)
+                    .attr("d", d3.linkRadial()
+                        .angle(d => d.x)
+                        .radius(d => d.y));
+
+                link.exit().remove();
+            }
+
+            // Function to create bar chart
+            function createBarChart(zipCode, zipChildren) {
+                d3.select("#bar-chart").selectAll("*").remove(); // Clear previous bar chart
+
+                if (!zipChildren) return; // Exit if there are no children
+
+                const barData = zipChildren.map(child => ({
+                    type: child.building_type,
+                    value: child.value
+                }));
+
+                const buildingTypeMap = {
+                    "Building Residential - Addition": "ResA",
+                    "Building Use & Occupancy": "UseO",
+                    "Building Residential - New": "ResN",
+                    "Building Residential - Rehab": "ResR",
+                    "Building Demolition Permit": "DemP",
+                    "Building Residential - Roofing / Siding": "Roof",
+                    "Building Commercial - Tenant Finish Out": "ComT",
+                    "Building Sign Permit": "Sign",
+                    "Building Commercial - New": "ComN",
+                    "Building Commercial New Storm Damage": "ComD",
+                    "Building Commercial - Rehab": "ComR",
+                    "Building Commercial - Addition": "ComA",
+                    "Temporary Building Use & Occupancy": "TempO",
+                    "Building Tree Removal Permit": "Tree",
+                    "Building Commercial - Shell": "ComS",
+                    "Building Moving Permit": "Move",
+                    "Building Commercial - Fire Damage": "ComF",
+                    "Building Commercial - Structural Frame": "ComF",
+                    "Building Commercial - Foundation": "ComF",
+                    "Building Residential - Change Contractor": "ResC",
+                    "Building Commercial - Roofing / Siding": "ComR",
+                    "Building Residential Rehab Storm Damage": "ResD"
+                };
+
+                const margin = { top: 20, right: 30, bottom: 80, left: 40 },
+                      width = 400 - margin.left - margin.right,
+                      height = 200 - margin.top - margin.bottom;
+
+                const x = d3.scaleBand()
+                    .domain(barData.map(d => buildingTypeMap[d.type] || d.type)) // Use four-letter key
+                    .range([0, width])
+                    .padding(0.1);
+
+                const y = d3.scaleLinear()
+                    .domain([0, d3.max(barData, d => d.value)]).nice()
+                    .range([height, 0]);
+
+                const barSvg = d3.select("#bar-chart").append("svg")
+                    .attr("width", width + margin.left + margin.right)
+                    .attr("height",700+ height + margin.top + margin.bottom)
+                    .append("g")
+                    .attr("transform", `translate(${margin.left},${margin.top})`);
+
+                barSvg.append("text")
+                    .attr("x", width / 2)
+                    .attr("y", -10)
+                    .attr("text-anchor", "middle")
+                    .text(`Zip Code: ${zipCode} | Total Value: $${d3.format(",")(d3.sum(barData, d => d.value))}`);
+
+                barSvg.selectAll(".bar")
+                    .data(barData)
+                    .enter().append("rect")
+                    .attr("class", "bar")
+                    .attr("x", d => x(buildingTypeMap[d.type] || d.type)) // Use four-letter key
+                    .attr("width", x.bandwidth())
+                    .attr("y", d => y(d.value))
+                    .attr("height", d => height - y(d.value))
+                    .attr("fill", (d, i) => d3.schemeCategory10[i % 10]);
+
+                barSvg.append("g")
+                    .attr("transform", `translate(0,${height})`)
+                    .call(d3.axisBottom(x).tickFormat(d => d) // Show four-letter keys
+                        .tickValues(barData.map(d => buildingTypeMap[d.type] || d.type))); // Show tick values
+
+                barSvg.selectAll(".tick text")
+        .attr("transform", "rotate(-90)") // Rotate labels by 90 degrees
+        .attr("dy", ".35em") // Vertical alignment
+        .attr("x", -height / 2) // Adjust x position for rotated text
+        .style("text-anchor", "end") // Adjust anchor for rotated text
+        .style("font-size", "14px"); // Increase font size for x-axis labels
+              
+                barSvg.append("g")
+                    .call(d3.axisLeft(y).tickFormat(d => `$${(d / 1000).toFixed(0)}k`)); // Format y-axis labels
+
+                // Show value on top of each bar on mouse hover
+                barSvg.selectAll(".bar")
+                    .on("mouseover", function(event, d) {
+                        d3.select(this).style("opacity", 0.7);
+                        barSvg.append("text")
+                            .attr("class", "value-text")
+                            .attr("x", x(buildingTypeMap[d.type] || d.type) + x.bandwidth() / 2)
+                            .attr("y", y(d.value) - 5)
+                            .attr("text-anchor", "middle")
+                            .style("font-size", "14px") // Increase font size for bar value
+                            .text(`$${d3.format(",")(d.value)}`); // Show formatted value
+                    })
+                    .on("mouseout", function() {
+                        d3.select(this).style("opacity", 1);
+                        barSvg.selectAll(".value-text").remove(); // Remove value text
+                    });
+
+                // Add legend for four-letter keys
+                const legendData = [
+                    { key: "ResN", label: "Residential - New" },
+                  { key: "ComN", label: "Commercial - New" },
+                    { key: "UseO", label: "Use & Occupancy" },
+                    { key: "ResA", label: "Residential - Addition" },
+                    { key: "ResR", label: "Residential - Rehab" },
+                    { key: "DemP", label: "Demolition Permit" },
+                    { key: "Roof", label: "Roofing / Siding" },
+                    { key: "ComT", label: "Commercial - Tenant Finish" },
+                    { key: "Sign", label: "Sign Permit" },
+                    { key: "ComD", label: "Storm Damage" },
+                    { key: "ComR", label: "Commercial - Rehab" },
+                    { key: "ComA", label: "Commercial - Addition" },
+                    { key: "TempO", label: "Temporary Use" },
+                    { key: "Tree", label: "Tree Removal" },
+                    { key: "ComS", label: "Commercial - Shell" },
+                    { key: "Move", label: "Moving Permit" },
+                    { key: "ComF", label: "Fire Damage" },
+                    { key: "ComF", label: "Structural Frame" },
+                    { key: "ComF", label: "Foundation" },
+                    { key: "ResC", label: "Change Contractor" },
+                    { key: "ComR", label: "Roofing / Siding" },
+                    { key: "ResD", label: "Rehab Storm Damage" }
+                ];
+
+                const legend = barSvg.append("g")
+                    .attr("transform", `translate(${width - 350}, ${height + 125})`);
+
+                legend.selectAll(".legend-item")
+                    .data(legendData)
+                    .enter().append("text")
+                    .attr("class", "legend-item")
+                    .attr("x", 0)
+                    .attr("y", (d, i) => i * 55)
+                    .text(d => `${d.key}: ${d.label}`);
+            }
+        });
+    </script>
+</body>
+</html>

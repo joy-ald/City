@@ -1,0 +1,33 @@
+{
+    "city": {
+        "parent": "city",
+        "children": [
+            {
+                "zip_code": 0,
+                "total_value": 348983,
+                "parent": 0,
+                "children": [
+                    {
+                        "building_type": "Building Residential - New",
+                        "value": 348983.0
+                    }
+                ]
+            },
+            {
+                "zip_code": 37013,
+                "total_value": 6060848,
+                "parent": 37013,
+                "children": [
+                    {
+                        "building_type": "Building Commercial - New",
+                        "value": 2726875.0
+                    },
+                    {
+                        "building_type": "Building Commercial - Rehab",
+                        "value": 721.0
+                    }
+                ]
+            }
+        ]
+    }
+}

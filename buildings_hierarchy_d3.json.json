@@ -1,0 +1,198 @@
+{
+    "name": "Root",
+    "children": [
+        {
+            "name": 37013,
+            "children": [
+                {
+                    "name": "Residential",
+                    "children": [
+                        {
+                            "name": "Less than 100000",
+                            "children": [
+                                {
+                                    "name": "Building with value 50000.0",
+                                    "value": 50000.0
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": 37012,
+            "children": [
+                {
+                    "name": "Commercial",
+                    "children": [
+                        {
+                            "name": "Less than 100000",
+                            "children": [
+                                {
+                                    "name": "Building with value 60000.0",
+                                    "value": 60000.0
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Industrial",
+                    "children": [
+                        {
+                            "name": "Between 500000 and 100000",
+                            "children": [
+                                {
+                                    "name": "Building with value 120000.0",
+                                    "value": 120000.0
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": 37011,
+            "children": [
+                {
+                    "name": "Residential",
+                    "children": [
+                        {
+                            "name": "Less than 100000",
+                            "children": [
+                                {
+                                    "name": "Building with value 55000.0",
+                                    "value": 55000.0
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Between 500000 and 100000",
+                            "children": [
+                                {
+                                    "name": "Building with value 400000.0",
+                                    "value": 400000.0
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": 37022,
+            "children": [
+                {
+                    "name": "Commercial",
+                    "children": [
+                        {
+                            "name": "Less than 100000",
+                            "children": [
+                                {
+                                    "name": "Building with value 58000.0",
+                                    "value": 58000.0
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": 37000,
+            "children": [
+                {
+                    "name": "Residential",
+                    "children": [
+                        {
+                            "name": "Less than 100000",
+                            "children": [
+                                {
+                                    "name": "Building with value 51000.0",
+                                    "value": 51000.0
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": 37014,
+            "children": [
+                {
+                    "name": "Commercial",
+                    "children": [
+                        {
+                            "name": "Between 1 million and 500000",
+                            "children": [
+                                {
+                                    "name": "Building with value 500100.0",
+                                    "value": 500100.0
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Residential",
+                    "children": [
+                        {
+                            "name": "More than 1 million",
+                            "children": [
+                                {
+                                    "name": "Building with value 1000500.0",
+                                    "value": 1000500.0
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": 37015,
+            "children": [
+                {
+                    "name": "Commercial",
+                    "children": [
+                        {
+                            "name": "Between 500000 and 100000",
+                            "children": [
+                                {
+                                    "name": "Building with value 500000.0",
+                                    "value": 500000.0
+                                }
+                            ]
+                        },
+                        {
+                            "name": "More than 1 million",
+                            "children": [
+                                {
+                                    "name": "Building with value 1200000.0",
+                                    "value": 1200000.0
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Industrial",
+                    "children": [
+                        {
+                            "name": "More than 1 million",
+                            "children": [
+                                {
+                                    "name": "Building with value 1030000.0",
+                                    "value": 1030000.0
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
